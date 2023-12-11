@@ -1,0 +1,9 @@
+---
+ansible_host: 192.168.1.249
+ansible_user: bobby
+ansible_ssh_pass: bobby
+ansible_connection: network_cli
+ansible_network_os: ios
+ansbile_become: yes
+ansible_become_method: enable
+ansible_become_pass: bobby

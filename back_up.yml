@@ -1,0 +1,24 @@
+---
+- name: 各ルーターの構成バックアップ
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: バックアップフォルダー存在確認
+      ansible.builtin.file:
+        path: "~/Desktop/Lab/RouterBackUp"
+        state: directory
+
+    - name: ルーター構成バックアップ
+      ansible.builtin.ios_command:
+        commands:
+          - show running-config
+      register: config_output
+
+    - name: display debug
+      debug:
+        var: ansible_facts
+
+    - name: 構成ファイル保存
+      ansible.builtin.copy:
+        content: "{{ config_output.stdout[0] }}"
+        dest: "~/Desktop/Lab/RouterBackUp/{{ inventory_hostname }}_backup.txt"

@@ -1,0 +1,113 @@
+Building configuration...
+
+Current configuration : 1459 bytes
+!
+! Last configuration change at 05:42:54 UTC Mon Dec 11 2023
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname 4thRW
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 OTy.EWBuvjLRwQvF1cIPlV/C5fgJckE45Pd1uV.EPuY
+!
+no aaa new-model
+memory-size iomem 15
+!
+ip cef
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+ip domain name router4
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+license udi pid CISCO1921/K9 sn FGL174821D7
+!
+!
+username bobby privilege 15 secret 4 OTy.EWBuvjLRwQvF1cIPlV/C5fgJckE45Pd1uV.EPuY
+!
+redundancy
+!
+!
+!
+!
+!
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address 192.168.1.245 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 192.168.1.242 255.255.255.252
+ duplex auto
+ speed auto
+!
+router ospf 1
+ network 192.168.1.240 0.0.0.3 area 0
+ network 192.168.1.244 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output lat pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ password bobby
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+scheduler allocate 20000 1000
+!
+end

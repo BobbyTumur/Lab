@@ -1,0 +1,96 @@
+Building configuration...
+
+Current configuration : 1517 bytes
+!
+! Last configuration change at 05:32:53 UTC Mon Dec 11 2023
+! NVRAM config last updated at 05:33:03 UTC Mon Dec 11 2023
+! NVRAM config last updated at 05:33:03 UTC Mon Dec 11 2023
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname 3rdRW
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 OTy.EWBuvjLRwQvF1cIPlV/C5fgJckE45Pd1uV.EPuY
+!
+no aaa new-model
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+!
+ip domain name router3
+multilink bundle-name authenticated
+!
+crypto pki token default removal timeout 0
+!
+!
+license udi pid CISCO1921/K9 sn FGL171223MB
+!
+!
+username bobby privilege 15 secret 4 OTy.EWBuvjLRwQvF1cIPlV/C5fgJckE45Pd1uV.EPuY
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address 192.168.1.249 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 192.168.1.254 255.255.255.252
+ duplex auto
+ speed auto
+!
+router ospf 1
+ network 192.168.1.248 0.0.0.3 area 0
+ network 192.168.1.252 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport input all
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ password bobby
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+scheduler allocate 20000 1000
+end
